@@ -550,17 +550,23 @@ ZcPostingIterator<bigEndian>::doUnpack(uint32_t docId)
     if (!_matchData.valid() || getUnpacked()) {
         return;
     }
+#if 0
     if (_featureSeekPos != 0) {
         // Handle deferred feature position seek now.
         featureSeek(_featureSeekPos);
         _featureSeekPos = 0;
     }
+#endif
     assert(docId == getDocId());
+#if 0
     uint32_t needUnpack = getNeedUnpack();
     if (needUnpack > 1) {
         _decodeContext->skipFeatures(needUnpack - 1);
     }
     _decodeContext->unpackFeatures(_matchData, docId);
+#else
+    _matchData[0]->reset(docId);
+#endif
     if (_decode_cheap_features) {
         TermFieldMatchData *tfmd = _matchData[0];
         tfmd->setFieldLength(_field_length);
