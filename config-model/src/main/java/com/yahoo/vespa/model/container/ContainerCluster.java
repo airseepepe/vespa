@@ -126,8 +126,6 @@ public abstract class ContainerCluster<CONTAINER extends Container>
 
     public static final String ROOT_HANDLER_BINDING = "*://*/";
 
-    private static final boolean messageBusEnabled = true;
-
     private final String name;
 
     protected List<CONTAINER> containers = new ArrayList<>();
@@ -141,6 +139,7 @@ public abstract class ContainerCluster<CONTAINER extends Container>
 
     private MbusParams mbusParams;
     private boolean rpcServerEnabled = true;
+    private boolean messageBusEnabled = true;
     private boolean httpServerEnabled = true;
 
     private final Set<Path> platformBundles = new LinkedHashSet<>();
@@ -662,6 +661,8 @@ public abstract class ContainerCluster<CONTAINER extends Container>
      * or empty if this is not specified by the application.
      */
     public Optional<Integer> getMemoryPercentage() { return Optional.ofNullable(memoryPercentage); }
+
+    protected final void setMessageBusEnabled(boolean messageBusEnabled) { this.messageBusEnabled = messageBusEnabled; }
 
     boolean messageBusEnabled() { return messageBusEnabled; }
 
